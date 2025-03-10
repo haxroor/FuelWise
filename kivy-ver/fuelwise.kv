@@ -1,6 +1,5 @@
 ScreenManager:
     id: screen_manager
-    FirstTimeScreen:
     MainScreen:
     SettingsScreen:
 
@@ -140,26 +139,3 @@ ScreenManager:
             #active: app.get_last_theme() # not working
             #on_active: app.switch_theme()
         Widget:
-
-#------------------------FIRST TIME--------------------------
-
-<FirstTimeScreen>:
-    name: "first_time_screen"
-    id: first_time_screen
-    MDScrollView:
-        MDBoxLayout:
-            id: first_time_scroll
-            orientation: "vertical"
-            MDLabel:
-                text: "Welcome to FuelWise"
-                halign: 'center'
-            MDButton:
-                pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                on_release: app.exit_tutorial()
-                MDButtonText:
-                    text: "Exit Tutorial (future implementation)"
-            MDLabel:
-                text: "First Time Screen"
-                halign: 'center'
-
-            # https://kivymd.readthedocs.io/en/latest/components/swiper/
