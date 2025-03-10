@@ -32,7 +32,7 @@ FuelWise allows users to track their fuel consumption by logging odometer readin
 ### Key Metrics:  
 - **Total Distance Traveled**  
 - **Total Fuel Consumed**  
-- **Average Fuel Consumption (L/100km)**  
+- **Average Fuel Consumption (L/100km or km/L)**  
 - **Trip-Specific Data**  
 
 ---
