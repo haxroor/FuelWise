@@ -1,0 +1,165 @@
+ScreenManager:
+    id: screen_manager
+    FirstTimeScreen:
+    MainScreen:
+    SettingsScreen:
+
+#----------------------------MAIN----------------------------
+
+<MainScreen>:
+    name: "main_screen"
+    id: main_screen
+    #md_bg_color: app.theme_cls.surfaceColor
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: 0.1,0.1 # fixes centered title only when resizing
+
+        MDTopAppBar:
+            type: "small"
+            theme_bg_color:"Custom"
+            md_bg_color:app.theme_cls.surfaceContainerLowColor
+            MDTopAppBarLeadingButtonContainer:
+                MDActionTopAppBarButton:
+                    icon: "menu"
+                    on_release: nav_drawer.set_state("toggle")
+            MDTopAppBarTitle:
+                text: "FuelWise"
+                bold: True
+                pos_hint: {"center_x": .5}
+
+        MDScrollView:
+            MDBoxLayout:
+                id: main_scroll
+                orientation: "vertical"
+                adaptive_height: True
+                spacing: "8sp"
+
+    MDFabButton:
+        icon: "plus"
+        pos_hint: {"center_x": .85, "y": 0.02}
+        size_hint: None, None
+        size: "56sp", "56sp"
+        on_release: app.open_entry_dialog()
+
+    MDNavigationDrawer:
+        drawer_type: "modal"
+        id: nav_drawer
+        theme_bg_color:"Custom"
+        md_bg_color:app.theme_cls.onBackgroundColor
+        MDNavigationDrawerMenu:
+            MDNavigationDrawerLabel:
+                text: "FuelWise"
+                bold : True
+                pos_hint: {"center_x": .5}
+
+            MDNavigationDrawerDivider:
+            MDNavigationDrawerItem:
+                id: nav_home
+                on_release:
+                    root.manager.current = "main_screen"
+                    nav_drawer.set_state("close")
+                MDNavigationDrawerItemLeadingIcon:
+                    icon: "home"
+                MDNavigationDrawerItemText:
+                    text: "Home"
+
+            MDNavigationDrawerItem:
+                id: nav_settings
+                on_release:
+                    root.manager.current = "settings_screen"
+                    nav_drawer.set_state("close")
+                MDNavigationDrawerItemLeadingIcon:
+                    icon: "cog"
+                MDNavigationDrawerItemText:
+                    text: "Settings"
+            MDNavigationDrawerDivider:
+
+#------------------------SETTINGS--------------------------
+
+<SettingsScreen>:
+    name: "settings_screen"
+    id: settings_screen
+    MDBoxLayout:
+        orientation: "vertical"
+        MDTopAppBar:
+            type: "small"
+            theme_bg_color:"Custom"
+            md_bg_color:app.theme_cls.surfaceContainerLowColor
+            pos_hint: {'top': 1}
+
+            MDTopAppBarLeadingButtonContainer:
+                MDActionTopAppBarButton:
+                    icon: "arrow-left"
+                    on_release: root.manager.current = "main_screen"
+            MDTopAppBarTitle:
+                text: "FuelWise"
+                bold : True
+                pos_hint: {"center_x": .5, 'top': 1}
+
+        MDList:
+            padding: 0.1, 0.1
+            MDListItem:
+                id: consumption_format_setting
+                MDListItemLeadingIcon:
+                    icon: "gauge"
+                    color: app.theme_cls.primaryColor
+                MDListItemHeadlineText:
+                    text: "Consumption Format"
+                MDListItemSupportingText:
+                    text: "Select the format for consumption display"
+            MDListItem:
+                id: palette_setting
+                MDListItemLeadingIcon:
+                    icon: "palette"
+                    color: app.theme_cls.primaryColor
+                MDListItemHeadlineText:
+                    text: "Palette"
+                MDListItemSupportingText:
+                    text: "Choose the appearance of the app"
+            MDListItem:
+                id: theme_setting
+                MDListItemLeadingIcon:
+                    icon: "theme-light-dark"
+                    color: app.theme_cls.primaryColor
+                MDListItemHeadlineText:
+                    text: "Theme"
+                MDListItemSupportingText:
+                    text: "Switch between light and dark theme"
+            MDListItem:
+                id: erase_data_setting
+                MDListItemLeadingIcon:
+                    icon: "delete-forever"
+                    color: app.theme_cls.primaryColor
+                MDListItemHeadlineText:
+                    text: "Erase Data"
+                MDListItemSupportingText:
+                    text: "Erase all trip data"
+
+        #MDSwitch:
+            #id: theme_switch
+            #active: app.get_last_theme() # not working
+            #on_active: app.switch_theme()
+        Widget:
+
+#------------------------FIRST TIME--------------------------
+
+<FirstTimeScreen>:
+    name: "first_time_screen"
+    id: first_time_screen
+    MDScrollView:
+        MDBoxLayout:
+            id: first_time_scroll
+            orientation: "vertical"
+            MDLabel:
+                text: "Welcome to FuelWise"
+                halign: 'center'
+            MDButton:
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_release: app.exit_tutorial()
+                MDButtonText:
+                    text: "Exit Tutorial (future implementation)"
+            MDLabel:
+                text: "First Time Screen"
+                halign: 'center'
+
+            # https://kivymd.readthedocs.io/en/latest/components/swiper/
