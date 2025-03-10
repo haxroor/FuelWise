@@ -39,19 +39,16 @@ Window.size = (1080/3, 2400/3)'''
 last_theme = None
 last_palette = None
 last_consumption_format = None
-first_time = 1
 global icon_color
 
 #---defining the screens---
 
-class FirstTimeScreen(MDScreen):
-    pass
 class MainScreen(MDScreen):
     pass
 class SettingsScreen(MDScreen):
     pass
 
-SCREENS = ["main_screen", "settings_screen", "first_time_screen"]
+SCREENS = ["main_screen", "settings_screen"]
 
 #-----------defining custom classes------------
 
@@ -111,7 +108,7 @@ class FuelWiseApp(MDApp):
             with open('preferences.json', 'r') as f:
                 self.preferences = json.load(f)
         except (FileNotFoundError, json.JSONDecodeError):
-            self.preferences = {"last_theme": "Light", "last_palette": "Green", "last_consumption_format": "L/100km", "first_time": 1}
+            self.preferences = {"last_theme": "Light", "last_palette": "Green", "last_consumption_format": "L/100km"}
         return self.preferences
 
     def save_preferences(self, new_last_theme=None, new_last_palette=None, new_last_consumption_format=None):
@@ -124,22 +121,17 @@ class FuelWiseApp(MDApp):
         self.preferences['last_theme'] = new_last_theme
         self.preferences['last_palette'] = new_last_palette
         self.preferences['last_consumption_format'] = new_last_consumption_format
-        self.preferences['first_time'] = 0
         with open('preferences.json', "w") as f:
             json.dump(self.preferences, f, indent=4)
 
     def on_start(self):
         global last_consumption_format
         global last_theme
-        global first_time
         global last_palette
         preferences = self.load_preferences()
         last_consumption_format = preferences['last_consumption_format']
         last_theme = preferences['last_theme']
-        first_time = preferences['first_time']
         last_palette = preferences['last_palette']
-        if first_time:
-            self.root.current = "first_time_screen"
         self.set_appearance()
         #self.populate_table() already called inside set_theme
         # ----settings buttons-----
@@ -167,12 +159,6 @@ class FuelWiseApp(MDApp):
     def on_consumption_format_setting_item_click(self, instance, touch):
         if instance.collide_point(*touch.pos):
             self.open_consumption_format_setting_dialog()
-
-    def exit_tutorial(self):
-        global first_time
-        first_time = 0
-        self.root.current = "main_screen"
-        self.save_preferences()
 
     #----------------theming----------------
 
@@ -247,9 +233,10 @@ class FuelWiseApp(MDApp):
                 style="elevated",
                 pos_hint={"center_x": .5},
                 padding="16sp",
-                size_hint=(None, None),
+                size_hint_x= .7,
+                size_hint_y= None,
+                adaptive_height=True,
                 size=(.5, "30sp"),
-                orientation="vertical",
             )
             no_entry_card.add_widget(MDLabel(text="No data available. Please add two more entries.", halign='center'))
             main_scroll.add_widget(no_entry_card)
@@ -259,9 +246,10 @@ class FuelWiseApp(MDApp):
                 style="elevated",
                 pos_hint={"center_x": .5},
                 padding="16sp",
-                size_hint=(None, None),
+                size_hint_x=.7,
+                size_hint_y=None,
+                adaptive_height=True,
                 size=(.5, "30sp"),
-                orientation="vertical",
             )
             one_entry_card.add_widget(MDLabel(text="Only one entry available. Please add a new entry.", halign='center'))
             main_scroll.add_widget(one_entry_card)
@@ -744,7 +732,6 @@ class FuelWiseApp(MDApp):
         sm = ScreenManager()
         sm.add_widget(MainScreen(name="main_screen"))
         sm.add_widget(SettingsScreen(name="settings_screen"))
-        sm.add_widget(FirstTimeScreen(name="first_time_screen"))
         return sm
 
 FuelWiseApp().run()
