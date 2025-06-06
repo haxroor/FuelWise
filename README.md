@@ -2,9 +2,9 @@
 
 **FuelWise** is a fuel tracking app designed to help users monitor their fuel consumption, track mileage, and optimize fuel efficiency. The app is available in two versions:  
 
-- **Kivy Version** – A much simpler version built with **Python**, using the **Kivy 2.3.1** framework and **KivyMD 2.0.1**.  
+- **Kivy Version** @Deprecated – A much simpler version built with **Python**, using the **Kivy 2.3.1** framework and **KivyMD 2.0.1**.  
 This version will not be maintained, future updates and improvements will be focused on the Flutter version of the app.
-- **Flutter Version** – A more advanced and refined version developed with **Flutter**, offering improved performance and a smoother UI experience.  
+- **Flutter Version** WIP – A more advanced and refined version developed with **Flutter**, offering improved performance and a smoother UI experience.  
 
 ---
 
